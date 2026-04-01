@@ -1,0 +1,175 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="520"
+        x:Class="GestionDeVignettesGUI.MainWindow"
+        Title="Gestion de Vignettes"
+        RequestedThemeVariant="Light"
+        Background="#F0F4F8"
+        MinWidth="800" MinHeight="480">
+
+    <Window.Styles>
+        
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="24" />
+            <Setter Property="Margin" Value="6" />
+            <Setter Property="BoxShadow" Value="0 2 12 0 #15000000" />
+        </Style>
+
+        <Style Selector="TextBlock.section-title">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#1E293B" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,0,16" />
+        </Style>
+        
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#64748B" />
+            <Setter Property="Margin" Value="0,8,0,3" />
+        </Style>
+        
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#F8FAFC" />
+            <Setter Property="BorderBrush" Value="#E2E8F0" />
+            <Setter Property="BorderThickness" Value="1.5" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="#1E293B" />
+        </Style>
+        
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#3B82F6" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#2563EB" />
+        </Style>
+        
+        <Style Selector="TextBlock.result">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="#475569" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="Background" Value="#F8FAFC" />
+        </Style>
+
+    </Window.Styles>
+
+    <Grid ColumnDefinitions="*,*,*" Margin="16,16,16,16">
+        
+        <Border Grid.Column="0" Classes="card">
+            <StackPanel>
+                
+                <TextBlock Classes="section-title" Text="🚗  Nouvelle Voiture" />
+
+                <TextBlock Classes="label" Text="IMMATRICULATION" />
+                <TextBox Name="textBoxNumImmatriculation"
+                         Watermark="Ex : AB-123-CD" />
+
+                <TextBlock Classes="label" Text="ANNÉE DE 1ÈRE IMMATRICULATION" />
+                <TextBox Name="textBoxAnneeImmatriculation"
+                         Watermark="Ex : 2018" />
+
+                <TextBlock Classes="label" Text="CHEVAUX FISCAUX" />
+                <TextBox Name="textBoxChevaux"
+                         Watermark="Ex : 7" />
+
+                <TextBlock Classes="label" Text="CARBURANT" />
+                <StackPanel Orientation="Horizontal" Spacing="20" Margin="0,4,0,0">
+                    <RadioButton Name="radioBtnDiesel" Content="Diesel" />
+                    <RadioButton Name="radioBtnEssence" Content="Essence" />
+                </StackPanel>
+
+                <Button Classes="primary"
+                        Content="Enregistrer"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Click="Enregistrer_OnClick"
+                        Margin="0,20,0,0" />
+
+            </StackPanel>
+        </Border>
+        
+        <Border Grid.Column="1" Classes="card">
+            <Grid RowDefinitions="Auto,*">
+
+                <TextBlock Grid.Row="0"
+                           Classes="section-title"
+                           Text="📋  Véhicules éligibles" />
+
+                <ListBox Grid.Row="1"
+                         Name="listBoxVechicules"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1.5"
+                         CornerRadius="8"
+                         Padding="4" />
+
+            </Grid>
+        </Border>
+        
+        <Border Grid.Column="2" Classes="card">
+            <StackPanel>
+
+                <TextBlock Classes="section-title" Text="🏷️  Calcul de Vignette" />
+
+                <TextBlock Classes="label" Text="IMMATRICULATION" />
+                <TextBox Name="textBoxCalcImmatriculation"
+                         Watermark="Ex : AB-123-CD" />
+
+                <TextBlock Classes="label" Text="RÉSULTATS" />
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1.5"
+                        CornerRadius="8"
+                        Padding="12"
+                        Margin="0,0,0,4">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Numéro de vignette"
+                                       FontSize="13"
+                                       Foreground="#64748B" />
+                            <TextBlock Name="textBlockVignette"
+                                       Text="—"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1E293B" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Couleur"
+                                       FontSize="13"
+                                       Foreground="#64748B" />
+                            <TextBlock Name="textBlockCouleur"
+                                       Text="—"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1E293B" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Button Classes="primary"
+                        Content="Calculer"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Click="Calculer_OnClick"
+                        Margin="0,12,0,0" />
+
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>
