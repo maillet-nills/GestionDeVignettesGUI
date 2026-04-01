@@ -13,12 +13,11 @@ public partial class MainWindow : Window
     int[] tabNbCheveaux = new int[100];
     
     int nbVoiture;
-    int nbVoitureEligible;
+    
     public MainWindow()
     {
         InitializeComponent();
         nbVoiture = 0;
-        nbVoitureEligible = 0;
     }
 
     private void Enregistrer_OnClick(object? sender, RoutedEventArgs e)
@@ -26,6 +25,7 @@ public partial class MainWindow : Window
         tabNumImmatriculation[nbVoiture] = textBoxNumImmatriculation.Text;
         tabAnnee[nbVoiture] = int.Parse(textBoxAnneeImmatriculation.Text);
         tabNbCheveaux[nbVoiture] = int.Parse(textBoxChevaux.Text);
+        listBoxVechicules.Items.Clear();
 
         if (radioBtnDiesel.IsChecked == true)
         {
@@ -35,18 +35,13 @@ public partial class MainWindow : Window
         {
             tabTypeCarburant[nbVoiture] = "essence";
         }
-
-        if ((DateTime.Now.Year - tabAnnee[nbVoiture]) >= 8)
+        
+        for (int i = 0; i < nbVoiture + 1; i++)
         {
-            listBoxVechicules.Items.Clear();
-            tabEligibles[nbVoitureEligible] = tabNumImmatriculation[nbVoiture];
-            
-            for (int i = 0; i < nbVoitureEligible + 1; i++)
+            if ((DateTime.Now.Year - tabAnnee[i]) >= 8)
             {
-                listBoxVechicules.Items.Add(tabEligibles[i]);
+                listBoxVechicules.Items.Add(tabNumImmatriculation[i]);
             }
-            
-            nbVoitureEligible++;
         }
         
         nbVoiture++;
